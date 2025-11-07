@@ -1,0 +1,8 @@
+node_modules/ 
+dist/ 
+.env 
+.idea/ 
+.vscode/ 
+frontend/node_modules/ 
+backend/node_modules/ 
+*.log 
