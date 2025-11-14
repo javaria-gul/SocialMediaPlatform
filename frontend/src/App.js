@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
-import Feed from "./components/Home/Feed";
+import HomeLayout from "./components/Home/HomeLayout";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 
 // Simple Protected Route
@@ -20,7 +20,7 @@ function App() {
           <Route path="/register" element={<AuthPage />} />
           <Route path="/" element={
             <ProtectedRoute>
-              <Feed />
+              <HomeLayout/>
             </ProtectedRoute>
           } />
         </Routes>
