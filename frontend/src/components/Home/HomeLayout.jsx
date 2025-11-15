@@ -6,19 +6,19 @@ import Feed from "../../pages/Feed";
 
 const HomeLayout = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-white flex">
       {/* LEFT SIDEBAR */}
-      <div className="hidden md:flex w-20 lg:w-24 p-3 flex-col items-center bg-white shadow-md">
+      <div className="hidden md:flex">
         <SidebarLeft />
       </div>
 
-      {/* MAIN FEED */}
-      <div className="flex-1 p-4 lg:p-6 overflow-y-auto">
+      {/* MAIN FEED - Right side ke liye bhi margin add kiya */}
+      <div className="flex-1 p-4 lg:p-6 bg-white overflow-y-auto ml-16 md:ml-15 mr-0 lg:mr-72">
         <Feed />
       </div>
 
       {/* RIGHT SIDEBAR */}
-      <div className="hidden lg:flex w-72 p-3 flex-col bg-white shadow-md">
+      <div className="hidden lg:flex">
         <SidebarRight />
       </div>
     </div>
