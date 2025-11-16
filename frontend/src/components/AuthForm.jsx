@@ -52,15 +52,38 @@ export default function AuthForm({ isLogin, toggleMode }) {
       if (isLogin) {
         const res = await apiLogin({ email: form.email, password: form.password });
         const token = res.data.token || (res.data && res.data.token) || res.data;
+        const firstLogin = res.data.firstLogin; // ✅ GET firstLogin FROM RESPONSE
+        
         if (!token) throw new Error("No token in response");
-        setAuthToken(token);
-        navigate("/");
+        
+        // ✅ UPDATED: Pass user data with firstLogin status
+        setAuthToken(token, { 
+          email: form.email, 
+          firstLogin: firstLogin !== undefined ? firstLogin : true,
+          name: form.name || '' 
+        });
+        
+        // ✅ REDIRECT TO ONBOARDING FOR NEW USERS
+        if (firstLogin !== false) {
+          navigate("/onboarding");
+        } else {
+          navigate("/");
+        }
       } else {
         await apiRegister({ name: form.name, email: form.email, password: form.password });
         const res = await apiLogin({ email: form.email, password: form.password });
         const token = res.data.token || res.data;
-        setAuthToken(token);
-        navigate("/");
+        const firstLogin = res.data.firstLogin;
+        
+        // ✅ UPDATED: Pass user data with firstLogin status  
+        setAuthToken(token, { 
+          email: form.email, 
+          firstLogin: firstLogin !== undefined ? firstLogin : true,
+          name: form.name 
+        });
+        
+        // ✅ NEW USERS ALWAYS GO TO ONBOARDING
+        navigate("/onboarding");
       }
     } catch (err) {
       console.error(err);
@@ -95,7 +118,7 @@ export default function AuthForm({ isLogin, toggleMode }) {
               value={form.name}
               onChange={handleChange}
               placeholder="Full name"
-              className="p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+              className="p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400 text-white placeholder-gray-400"
               required={!isLogin}
             />
             {formErrors.name && <span className="text-red-400 text-sm">{formErrors.name}</span>}
@@ -109,7 +132,7 @@ export default function AuthForm({ isLogin, toggleMode }) {
             onChange={handleChange}
             placeholder="Email"
             type="email"
-            className="p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className="p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400 text-white placeholder-gray-400"
             required
           />
           {formErrors.email && <span className="text-red-400 text-sm">{formErrors.email}</span>}
@@ -122,7 +145,7 @@ export default function AuthForm({ isLogin, toggleMode }) {
             onChange={handleChange}
             placeholder="Password"
             type="password"
-            className="p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className="p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400 text-white placeholder-gray-400"
             required
           />
           {formErrors.password && <span className="text-red-400 text-sm">{formErrors.password}</span>}
@@ -131,8 +154,8 @@ export default function AuthForm({ isLogin, toggleMode }) {
         <button
           type="submit"
           disabled={loading}
-          className={`py-2 rounded-lg font-bold text-white transition transform ${
-            loading ? "bg-gray-500" : "bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105"
+          className={`py-3 rounded-lg font-bold text-white transition transform ${
+            loading ? "bg-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105"
           }`}
         >
           {loading ? (isLogin ? "Logging in..." : "Registering...") : (isLogin ? "Login" : "Sign up")}
@@ -141,7 +164,7 @@ export default function AuthForm({ isLogin, toggleMode }) {
 
       <p className="mt-4 text-center text-gray-300">
         {isLogin ? "Don't have an account?" : "Already have an account?"}
-        <button onClick={toggleMode} className="text-pink-400 font-semibold ml-2">
+        <button onClick={toggleMode} className="text-pink-400 font-semibold ml-2 hover:text-pink-300 transition-colors">
           {isLogin ? "Register" : "Login"}
         </button>
       </p>

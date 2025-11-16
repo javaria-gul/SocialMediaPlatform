@@ -35,10 +35,10 @@ const SidebarRight = () => {
           hidden md:flex 
           flex-col space-y-3
           p-3
-          w-72 
+          w-64
           fixed right-3 top-4 
           bg-blue-900 
-          h-[calc(100vh-32px)]
+          h-[calc(100vh-30px)]
           rounded-2xl 
           
           overflow-hidden

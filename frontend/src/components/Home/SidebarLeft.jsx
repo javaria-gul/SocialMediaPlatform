@@ -1,18 +1,30 @@
-// src/components/Home/SidebarLeft.jsx
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Home, MessageCircle, Bell, Search, PlusCircle, Settings, User, Moon } from "lucide-react";
 
 const SidebarLeft = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const menu = [
     { label: "Home", icon: <Home size={20} />, path: "/" },
     { label: "Chat", icon: <MessageCircle size={20} />, path: "/chat" },
     { label: "Notifications", icon: <Bell size={20} />, path: "/notifications" },
     { label: "Search", icon: <Search size={20} />, path: "/search" },
-    { label: "Create Post", icon: <PlusCircle size={20} />, path: "C:\Users\ICT\TRENDZZ\frontend\src\components\Home\CreatePost.jsx" },
+    { label: "Create Post", icon: <PlusCircle size={20} />, path: "/create-post" },
     { label: "Profile", icon: <User size={20} />, path: "/profile" },
     { label: "Settings", icon: <Settings size={20} />, path: "/settings" },
     { label: "Dark Mode", icon: <Moon size={20} />, path: "/theme" },
   ];
+
+  const handleNavigation = (path) => {
+    console.log('Navigating to:', path); // Debug log
+    if (path === "/theme") {
+      document.documentElement.classList.toggle('dark');
+      return;
+    }
+    navigate(path);
+  };
 
   return (
     <div className="
@@ -28,26 +40,25 @@ const SidebarLeft = () => {
       border 
       border-blue-700
     ">
-      {/* All menu items in one list */}
       <ul className="flex flex-col items-center space-y-3 mt-2">
         {menu.map((item, index) => (
           <li
             key={index}
-            className="
+            className={`
               group
               w-10 h-10 
               flex items-center justify-center 
               rounded-xl 
-              hover:bg-yellow-400
               transition-all cursor-pointer
-              text-white
-            "
+              ${location.pathname === item.path 
+                ? 'bg-yellow-400 text-gray-900' 
+                : 'text-white hover:bg-yellow-400 hover:text-gray-900'
+              }
+            `}
             title={item.label}
+            onClick={() => handleNavigation(item.path)}
           >
-            {/* White icon without background */}
-            <div className="text-white group-hover:text-gray-900 transition-colors">
-              {item.icon}
-            </div>
+            {item.icon}
           </li>
         ))}
       </ul>
