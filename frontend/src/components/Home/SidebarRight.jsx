@@ -76,36 +76,21 @@ const SidebarRight = () => {
       });
       
       // DIRECT CALL to Python ML Service
-// Change API endpoint to v2
-// Temporary: Use v1 endpoint (jo working hai)
-const mlServiceUrl = process.env.REACT_APP_ML_RECOMMENDER_URL || 'http://localhost:8001';
-const response = await axios.post(
-    `${mlServiceUrl}/api/v1/recommendations`,  // ✅ V1 USE KARO
-    {
-        user_id: userData._id,
-        limit: 10
-    },
-    {
-        timeout: 10000,
-        headers: { 'Content-Type': 'application/json' }
-    }
-);
+      // Change API endpoint to v2
+      // Temporary: Use v1 endpoint (jo working hai)
+      const mlServiceUrl = process.env.REACT_APP_ML_RECOMMENDER_URL || 'http://localhost:8001';
+      const response = await axios.post(
+        `${mlServiceUrl}/api/v1/recommendations`,  // ✅ V1 USE KARO
+        {
+          user_id: userData._id,
+          limit: 10
+        },
+        {
+          timeout: 10000,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
 
-// Add ML model info display
-{mlStats && (
-    <div className="mt-2 pt-2 border-t border-gray-200">
-        <div className="text-[10px] text-gray-500">
-            <div className="flex justify-between">
-                <span>ML Model:</span>
-                <span className="font-medium">{response.data.ml_model || 'KNN'}</span>
-            </div>
-            <div className="flex justify-between mt-0.5">
-                <span>Algorithm:</span>
-                <span className="font-medium">k-Nearest Neighbors</span>
-            </div>
-        </div>
-    </div>
-)}
       console.log('✅ [ML] Response received:', {
         success: response.data.success,
         count: response.data.data?.length || 0,

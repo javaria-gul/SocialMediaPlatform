@@ -7,7 +7,7 @@ This guide will help you deploy the Trendzz application to production environmen
 3. **ML Services** (Python - Optional)
 
 ## Prerequisites
-- Node.js 16+ installed
+- Node.js 18+ installed (Node.js 16 reached end-of-life in September 2023)
 - MongoDB instance (local or cloud)
 - Cloudinary account for media uploads
 - (Optional) Python 3.9+ for ML features

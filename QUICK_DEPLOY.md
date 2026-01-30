@@ -4,7 +4,7 @@ This is a simplified guide to get Trendzz deployed quickly. For detailed deploym
 
 ## Prerequisites
 
-- Node.js 16+ installed
+- Node.js 18+ installed (Node.js 16 reached end-of-life in September 2023)
 - MongoDB database (local or cloud like MongoDB Atlas)
 - Cloudinary account (required for image/video uploads)
 
