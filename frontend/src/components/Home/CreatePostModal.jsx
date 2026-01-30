@@ -82,7 +82,8 @@ const CreatePostModal = ({ onClose, onPostCreated, postedOn = null }) => {
 
       setIsCheckingContent(true);
       try {
-        const response = await fetch('http://localhost:5002/moderate', {
+        const moderationUrl = process.env.REACT_APP_MODERATION_URL || 'http://localhost:5002';
+        const response = await fetch(`${moderationUrl}/moderate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: content })
@@ -112,7 +113,8 @@ const CreatePostModal = ({ onClose, onPostCreated, postedOn = null }) => {
 const testBackend = async () => {
   try {
     console.log('🔍 Testing backend connection...');
-    const response = await fetch('http://localhost:5000/api/posts/test');
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+    const response = await fetch(`${apiUrl}/posts/test`);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }

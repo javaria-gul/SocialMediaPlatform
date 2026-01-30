@@ -78,8 +78,9 @@ const SidebarRight = () => {
       // DIRECT CALL to Python ML Service
 // Change API endpoint to v2
 // Temporary: Use v1 endpoint (jo working hai)
+const mlServiceUrl = process.env.REACT_APP_ML_RECOMMENDER_URL || 'http://localhost:8001';
 const response = await axios.post(
-    'http://localhost:8001/api/v1/recommendations',  // ✅ V1 USE KARO
+    `${mlServiceUrl}/api/v1/recommendations`,  // ✅ V1 USE KARO
     {
         user_id: userData._id,
         limit: 10

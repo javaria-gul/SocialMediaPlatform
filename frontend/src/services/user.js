@@ -171,7 +171,8 @@ export const getMLRecommendations = async () => {
         // Check if ML service is running
         try {
             console.log('🔍 [ML] Checking service health...');
-            const healthCheck = await axios.get('http://localhost:8001/health', { timeout: 3000 });
+            const mlServiceUrl = process.env.REACT_APP_ML_RECOMMENDER_URL || 'http://localhost:8001';
+            const healthCheck = await axios.get(`${mlServiceUrl}/health`, { timeout: 3000 });
             console.log('✅ [ML] Service health:', healthCheck.data);
             
             return {
