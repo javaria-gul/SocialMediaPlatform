@@ -33,61 +33,85 @@ Follow these steps to run **Trendzz** locally 👇
 
 ### 1️⃣ Clone the Repository
 
+```bash
 git clone https://github.com/<your-username>/trendzz.git
 cd trendzz
+```
 
 ### 2️⃣ Install Dependencies
-For Backend:
-cd server
+
+**For Backend:**
+```bash
+cd backend
 npm install
+```
 
-For Frontend:
-cd ../client
+**For Frontend:**
+```bash
+cd frontend
 npm install
+```
 
-### 3️⃣ Setup MongoDB
+### 3️⃣ Environment Configuration
 
-Install MongoDB on your machine or create a free cluster on MongoDB Atlas
+**Backend Setup:**
+1. Copy the example file: `cp backend/.env.example backend/.env`
+2. Edit `backend/.env` with your credentials:
+   - MongoDB connection string
+   - JWT secret key
+   - Cloudinary credentials (required for uploads)
 
-Create a .env file in /server with:
+**Frontend Setup:**
+1. Copy the example file: `cp frontend/.env.example frontend/.env`
+2. Edit `frontend/.env` if needed (defaults work for local development)
 
-MONGO_URI=mongodb://127.0.0.1:27017/trendzz
-JWT_SECRET=yourSecretKey
-PORT=5000
-
-
-Start MongoDB service (Windows users may need Admin mode):
-
-net start MongoDB
+See [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) for detailed configuration instructions.
 
 ### 4️⃣ Run the Application
-Backend:
-cd server
+
+**Backend:**
+```bash
+cd backend
+npm run dev  # Development mode
+# or
+npm start    # Production mode
+```
+
+**Frontend:**
+```bash
+cd frontend
 npm start
+```
 
-Frontend:
-cd ../client
-npm run dev
-
-
-Then open:
- http://localhost:3000
+Then open http://localhost:3000
 
 ### 5️⃣ (Optional) Run the ML Flask API
 
-If you’re using ML predictions locally:
+If you're using ML predictions locally:
 
+```bash
 cd ml-model
 pip install -r requirements.txt
 python app.py
-
+```
 
 This will start the Flask server at http://localhost:5001.
 
+---
 
+## 🚀 Deployment
 
+For production deployment instructions, see:
+- **[QUICK_DEPLOY.md](./QUICK_DEPLOY.md)** - Quick deployment guide
+- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Comprehensive deployment documentation
 
+**Key Points:**
+- All sensitive data uses environment variables (no hardcoded credentials)
+- Frontend builds successfully with `npm run build`
+- Backend is production-ready with proper error handling
+- Cloudinary handles all media uploads and CDN distribution
 
+---
 
 🖤 Support
 

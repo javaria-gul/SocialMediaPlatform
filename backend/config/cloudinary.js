@@ -7,16 +7,22 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 console.log('🔍 Cloudinary Config Check:', {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dl07wiajg',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? '✅ SET' : '❌ NOT FOUND',
   api_key: process.env.CLOUDINARY_API_KEY ? '✅ SET' : '❌ NOT FOUND',
   api_secret: process.env.CLOUDINARY_API_SECRET ? '✅ SET' : '❌ NOT FOUND'
 });
 
+// Validate required Cloudinary credentials
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+  console.error('❌ CLOUDINARY CREDENTIALS NOT CONFIGURED!');
+  console.error('Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in .env file');
+}
+
 // Configure Cloudinary with timeout for large files
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dl07wiajg',
-  api_key: process.env.CLOUDINARY_API_KEY || '512269274451677',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'YaygY5xgJ-0_2YPo9pDKjKUnMMY',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
   secure: true,
   timeout: 120000, // 120 seconds timeout for large files
   chunk_size: 20000000, // 20MB chunk size for large files
